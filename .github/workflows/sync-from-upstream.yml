@@ -1,0 +1,59 @@
+name: Sync from upstream
+
+on:
+  schedule:
+    # Daily at 09:00 UTC (~01:00-02:00 PT)
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    # No-op on the upstream personal repo; only runs on the org mirror.
+    if: github.repository == 'siegel-lab-ucd/HiveTransition'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mirror
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Hard-reset main to upstream/main
+        run: |
+          git remote add upstream https://github.com/ianandersonlol/HiveTransition.git
+          git fetch upstream main
+          git checkout main
+          git reset --hard upstream/main
+
+      - name: Prepend mirror banner to README
+        run: |
+          BANNER_MARKER='<!-- mirror-banner -->'
+          BANNER=$(cat <<EOF
+${BANNER_MARKER}
+> **Automated mirror.** This repository syncs from [ianandersonlol/HiveTransition](https://github.com/ianandersonlol/HiveTransition) every 24 hours. Please open issues and pull requests on the upstream repository — any direct changes here will be overwritten on the next sync.
+
+EOF
+)
+          if [ -f README.md ] && ! grep -q "${BANNER_MARKER}" README.md; then
+            printf '%s\n%s' "${BANNER}" "$(cat README.md)" > README.md.new
+            mv README.md.new README.md
+          fi
+
+      - name: Commit and force-push to mirror
+        run: |
+          git add README.md
+          if git diff --cached --quiet; then
+            # README already had the banner — still need to push the upstream reset
+            git push --force origin main
+          else
+            git commit -m "Sync from upstream and refresh mirror banner"
+            git push --force origin main
+          fi
