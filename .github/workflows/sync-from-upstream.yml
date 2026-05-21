@@ -35,15 +35,14 @@ jobs:
 
       - name: Prepend mirror banner to README
         run: |
-          BANNER_MARKER='<!-- mirror-banner -->'
-          BANNER=$(cat <<EOF
-${BANNER_MARKER}
-> **Automated mirror.** This repository syncs from [ianandersonlol/HiveTransition](https://github.com/ianandersonlol/HiveTransition) every 24 hours. Please open issues and pull requests on the upstream repository — any direct changes here will be overwritten on the next sync.
-
-EOF
-)
-          if [ -f README.md ] && ! grep -q "${BANNER_MARKER}" README.md; then
-            printf '%s\n%s' "${BANNER}" "$(cat README.md)" > README.md.new
+          MARKER='<!-- mirror-banner -->'
+          if [ -f README.md ] && ! grep -q "$MARKER" README.md; then
+            {
+              echo "$MARKER"
+              echo "> **Automated mirror.** This repository syncs from [ianandersonlol/HiveTransition](https://github.com/ianandersonlol/HiveTransition) every 24 hours. Please open issues and pull requests on the upstream repository — any direct changes here will be overwritten on the next sync."
+              echo ""
+              cat README.md
+            } > README.md.new
             mv README.md.new README.md
           fi
 
