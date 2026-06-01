@@ -1,0 +1,16 @@
+{
+  "name": "ca2_acetazolamide",
+  "_notes": "Human carbonic anhydrase II (PDB 2CBA) + acetazolamide (PDB 1YDB ligand AZM). Acetazolamide is a clinical CA inhibitor (~10 nM Ki).",
+  "chains": [
+    {
+      "id": "A",
+      "type": "protein",
+      "sequence": "MSHHWGYGKHNGPEHWHKDFPIAKGERQSPVDIDTHTAKYDPSLKPLSVSYDQATSLRILNNGHAFNVEFDDSQDKAVLKGGPLDGTYRLIQFHFHWGSLDGQGSEHTVDKKKYAAELHLVHWNTKYGDFGKAVQQPDGLAVLGIFLKVGSAKPGLQKVVDVLDSIKTKGKSADFTNFDPRGLLPESLDYWTYPGSLTTPPLLECVTWIVLKEPISVSSEQVLKFRKLNFNGEGEPEELMVDNWRPAQPLKNRQIKASFK"
+    },
+    {
+      "id": "L",
+      "type": "ligand",
+      "smiles": "CC(=O)Nc1nnc(S(=O)(=O)N)s1"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "barnase_barstar",
+  "_notes": "Barnase (B. amyloliquefaciens RNase, ~110 aa) + barstar (~89 aa) — PDB 1BRS. One of the tightest known protein-protein complexes (Kd ~10^-14 M).",
+  "chains": [
+    {
+      "id": "A",
+      "type": "protein",
+      "sequence": "AQVINTFDGVADYLQTYHKLPDNYITKSEAQALGWVASKGNLADVAPGKSIGGDIFSNREGKLPGKSGRTWREADINYTSGFRNSDRILYSSDWLIYKTTDHYQTFTKIR"
+    },
+    {
+      "id": "B",
+      "type": "protein",
+      "sequence": "KKAVINGEQIRSISDLHQTLKKELALPEYYGENLDALWDCLTGWVEYPLVLEWRQFEQSKQLTENGAESVLQVFREAKAEGCDITIILS"
+    }
+  ]
+}

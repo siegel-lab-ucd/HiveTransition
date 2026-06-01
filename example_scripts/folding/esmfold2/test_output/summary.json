@@ -1,0 +1,11 @@
+[
+  {
+    "id": "2cba",
+    "length": 260,
+    "plddt_mean": 0.9673137068748474,
+    "ptm": 0.9812336564064026,
+    "iptm": 0.0,
+    "cif": "/quobyte/jbsiegelgrp/software/esmfold2_examples/outputs/stage_nfs_14689046/2cba.cif",
+    "seconds": 40.13
+  }
+]
