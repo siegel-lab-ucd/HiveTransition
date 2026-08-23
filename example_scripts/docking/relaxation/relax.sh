@@ -10,6 +10,8 @@
 #SBATCH --array=1-5
 
 
+# to submit just do sbatch [name of script] 
+
 /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/source/bin/relax.static.linuxgccrelease \
   -database /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/database \
   -overwrite \
