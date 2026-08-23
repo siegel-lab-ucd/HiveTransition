@@ -7,13 +7,13 @@
 #SBATCH --requeue
 #SBATCH --output=logs/relax_%A_%a.out
 #SBATCH --error=logs/relax_%A_%a.err
-#SBATCH --array=1-100
+#SBATCH --array=1-5
 
 
 /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/source/bin/relax.static.linuxgccrelease \
   -database /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/database \
   -overwrite \
-  -nstruct 5 \
+  -nstruct 1 \
   -ex1 -ex2 \
   -use_input_sc \
   -flip_HNQ \
