@@ -25,5 +25,5 @@
   -relax:constrain_relax_to_start_coords \
   -relax:coord_constrain_sidechains \
   -relax:ramp_constraints false \
-  -in:file:s hello.pdb \
+  -in:file:s [name of pdb replace with your pdb name].pdb \
   -out:path:all relax_results
