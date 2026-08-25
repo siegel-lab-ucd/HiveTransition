@@ -1,0 +1,61 @@
+<ROSETTASCRIPTS>
+     <!-- NOTE: This protocol assumes the ligand is on Chain X in yourinput.pdb -->
+     <!-- If your ligand uses a different chain letter, update all instances of chains="X" / chain="X" below -->
+
+     <SCOREFXNS>
+               <ScoreFunction name="myscore" weights="ref2015_cst.wts"/>
+     </SCOREFXNS>
+
+     <SCORINGGRIDS ligand_chain="X" width="20.0">
+               <ClassicGrid grid_name="dock_grid" weight="1.0"/>
+     </SCORINGGRIDS>
+
+     <TASKOPERATIONS>
+               <DetectProteinLigandInterface name="interface_detect" design="0" cut1="6.0" cut2="8.0" cut3="10.0" cut4="12.0"/>
+               <LimitAromaChi2 name="limchi2"/>
+               <ProteinLigandInterfaceUpweighter name="up" interface_weight="1.5" />
+     </TASKOPERATIONS>
+
+     <FILTERS>
+               <EnzScore name="all_cst" score_type="cstE" scorefxn="myscore" whole_pose="1" energy_cutoff="10000000000000000000"/>
+               <LigInterfaceEnergy name="interfE" scorefxn="myscore" energy_cutoff="100000"/>
+     </FILTERS>
+
+     <MOVERS>
+             <AddOrRemoveMatchCsts name="cstadd" cst_instruction="add_new"/>
+
+             <InterfaceScoreCalculator name="add_scores" chains="X" scorefxn="myscore" />
+
+             <EnzRepackMinimize name="desmin_wbb" design="0" repack_only="0" scorefxn_minimize="myscore" scorefxn_repack="soft_rep" minimize_rb="1" minimize_sc="1" minimize_bb="1" cycles="1" minimize_lig="1" min_in_stages="0" backrub="0" task_operations="interface_detect,limchi2,up"/>
+
+             <EnzRepackMinimize name="desmin_nobb" design="0" repack_only="1" scorefxn_minimize="soft_rep" scorefxn_repack="soft_rep" minimize_rb="1" minimize_sc="1" minimize_bb="0" cycles="1" minimize_lig="1" min_in_stages="0" backrub="0" task_operations="interface_detect,limchi2,up"/>
+
+             <EnzRepackMinimize name="cstopt" cst_opt="1" minimize_rb="1" minimize_sc="1" minimize_bb="0" cycles="1" min_in_stages="0" minimize_lig="1" />
+
+             <Transform name="trans1" chain="X" box_size="20" move_distance="2" angle="20" cycles="1000000" repeats="5" temperature="5"/>
+             <Transform name="trans2" chain="X" box_size="2" move_distance="0.2" angle="20" cycles="1000000" repeats="5" temperature="5"/>
+
+             <PredesignPerturbMover name="predes1" trans_magnitude="1" rot_magnitude="20" dock_trials="1000"/>
+             <PredesignPerturbMover name="predes2" trans_magnitude="0.1" rot_magnitude="2.0" dock_trials="1000"/>
+
+             <ParsedProtocol name="dock_des">
+                <Add mover="trans1"/>
+                <Add mover="trans2"/>
+                <Add mover="predes1"/>
+                <Add mover="predes2"/>
+                <Add mover="cstopt"/>
+                <Add mover_name="desmin_nobb"/>
+                <Add mover="desmin_wbb"/>
+             </ParsedProtocol>
+
+             <GenericMonteCarlo name="multi_dock" mover_name="dock_des" filter_name="interfE" trials="8" />
+
+     </MOVERS>
+
+     <PROTOCOLS>
+             <Add mover_name="cstadd" />
+             <Add mover_name="multi_dock" />
+             <Add mover_name="add_scores" />
+             <Add filter_name="all_cst" />
+     </PROTOCOLS>
+</ROSETTASCRIPTS>

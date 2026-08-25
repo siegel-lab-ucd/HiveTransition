@@ -139,6 +139,7 @@ WSL maintains its own SSH configuration separate from Windows:
     - [MPNNP Pipeline](#mpnnp-pipeline)
   - [Docking and Relaxation](#docking-and-relaxation)
     - [GALigandDock](#galigand-dock)
+    - [Rosetta Ligand Docking](#rosetta-ligand-docking)
     - [Rosetta Relaxation](#relaxation)
     - [HADDOCK3](#haddock3)
     - [PLACER](#placer)
@@ -405,6 +406,11 @@ HiveTransition/
 │   ├── docking/                       # Docking and relaxation
 │   │   ├── galigand_dock/
 │   │   │   └── submit.sh
+│   │   ├── rosettaliganddock/
+│   │   │   ├── submit_docking.bash
+│   │   │   ├── flags
+│   │   │   ├── predesigndock_0_mutations.xml
+│   │   │   └── README.md
 │   │   ├── relaxation/
 │   │   │   └── relax.sh
 │   │   ├── haddock3/
@@ -619,6 +625,13 @@ This project includes example SLURM submission scripts for running computational
 -   **Script:** `example_scripts/docking/galigand_dock/submit.sh`
 -   **Description:** Rosetta GALigandDock protocol for ligand docking. Includes XML configuration, constraint files, ligand parameter files, and example PDB inputs.
 -   **[Full Documentation](docs/galigand_dock.md)**
+
+#### Rosetta Ligand Docking
+
+-   **Script:** `example_scripts/docking/rosettaliganddock/submit_docking.bash`
+-   **Description:** Constrained protein-ligand docking with predesign perturbation using RosettaScripts (Rosetta 3.14 / 3.15). Includes XML protocol, flag file, and array job submission.
+-   **Resources:** `low` with `--requeue` | 1 CPU | 8G | 48h | array 1-50
+-   **Files:** `flags`, `predesigndock_0_mutations.xml`, `README.md`
 
 #### Relaxation
 
