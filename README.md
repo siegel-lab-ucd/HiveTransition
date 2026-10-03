@@ -1,3 +1,6 @@
+<!-- mirror-banner -->
+> **Automated mirror.** This repository syncs from [ianandersonlol/HiveTransition](https://github.com/ianandersonlol/HiveTransition) every 24 hours. Please open issues and pull requests on the upstream repository — any direct changes here will be overwritten on the next sync.
+
 # HIVE Cluster Resources
 
 This repository contains example SLURM scripts and documentation for running computational biology workflows on the HIVE HPC cluster at UC Davis.
